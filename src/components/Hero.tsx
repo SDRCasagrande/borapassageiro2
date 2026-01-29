@@ -44,28 +44,12 @@ export function Hero() {
 
                         {/* Screen Content */}
                         <div className="absolute inset-0 bg-gray-900 flex flex-col pt-12">
-                            {/* Logo on Phone */}
-                            <div className="flex-1 flex flex-col items-center justify-center space-y-6 p-6">
-                                <div className="w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-                                    <span className="text-white text-2xl font-black italic">BORA</span>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="text-white font-bold text-xl">Bora Passageiro</h3>
-                                    <p className="text-gray-400 text-sm">Peça sua corrida agora</p>
-                                </div>
-
-                                {/* Fake UI Inputs */}
-                                <div className="w-full space-y-3 mt-8">
-                                    <div className="bg-gray-800 p-3 rounded-xl flex items-center gap-3 border border-gray-700">
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                        <span className="text-gray-400 text-xs">Onde você está?</span>
-                                    </div>
-                                    <div className="bg-gray-800 p-3 rounded-xl flex items-center gap-3 border border-gray-700">
-                                        <div className="w-2 h-2 bg-green-500 rounded-sm"></div>
-                                        <span className="text-gray-400 text-xs">Para onde vai?</span>
-                                    </div>
-                                </div>
-                            </div>
+                            {/* Screen Content - Image Asset */}
+                            <img
+                                src="/assets/app-screen.png"
+                                alt="App Bora Passageiro"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
 
                             {/* Phone Bottom Bar */}
                             <div className="h-1 w-1/3 bg-gray-600 rounded-full mx-auto mb-2"></div>
