@@ -21,10 +21,6 @@ export function Header() {
 
                 {/* CTA */}
                 <div className="flex items-center gap-4">
-                    <button className="hidden md:flex items-center gap-2 text-sm font-bold border border-white/20 bg-white/10 text-white px-5 py-2.5 rounded-full hover:bg-white/20 transition-all">
-                        <User className="w-4 h-4" />
-                        Entrar
-                    </button>
                     <button
                         className="md:hidden text-white p-2"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -59,10 +55,6 @@ export function Header() {
                         >
                             Segurança
                         </a>
-                        <button className="flex items-center justify-center gap-2 w-full mt-4 bg-blue-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-blue-500 transition-all">
-                            <User className="w-4 h-4" />
-                            Entrar
-                        </button>
                     </nav>
                 </div>
             )}

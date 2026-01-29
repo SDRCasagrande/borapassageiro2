@@ -4,9 +4,10 @@ export function ActionButtons() {
     return (
         <div className="flex flex-col sm:flex-row gap-6 mt-10 w-full justify-center md:justify-start">
             <a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=br.com.devbase.borapassageiro&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="transform hover:scale-105 transition-transform duration-300 drop-shadow-xl"
-                onClick={(e) => { e.preventDefault(); alert('Em breve na Google Play!'); }}
             >
                 <img
                     src="/assets/btn-google-play.png"
@@ -16,9 +17,10 @@ export function ActionButtons() {
             </a>
 
             <a
-                href="#"
+                href="https://apps.apple.com/br/app/bora-passageiro-clientes/id1579518558"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="transform hover:scale-105 transition-transform duration-300 drop-shadow-xl"
-                onClick={(e) => { e.preventDefault(); alert('Em breve na App Store!'); }}
             >
                 <img
                     src="/assets/btn-app-store.png"
