@@ -36,18 +36,29 @@ export function Hero() {
                     </div>
                 </div>
 
-                {/* Phone Mockup */}
-                <div className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
-                    <div className="relative w-[320px] max-w-full h-auto transform md:rotate-y-12 md:-rotate-x-6 transition-all duration-500 hover:rotate-0 filter drop-shadow-2xl">
+                {/* Phone Mockup Container */}
+                <div className="relative flex justify-center items-center mt-12 md:mt-0">
+                    {/* CSS Phone Frame */}
+                    <div className="relative w-[300px] h-[600px] bg-black rounded-[3rem] border-[8px] border-gray-900 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105">
+                        {/* Dynamic Island / Notch */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-7 w-28 bg-black rounded-b-2xl z-20"></div>
+
+                        {/* Status Bar Mock (optional, just space) */}
+                        <div className="w-full h-8 bg-black/10 absolute top-0 z-10"></div>
+
+                        {/* Screen Content */}
                         <img
                             src="/assets/app-screen.png"
                             alt="App Bora Passageiro"
-                            className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover"
                         />
+
+                        {/* Home Indicator */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-20"></div>
                     </div>
 
                     {/* Glow effect behind phone */}
-                    <div className="absolute -z-10 w-[300px] h-[500px] bg-blue-500/30 rounded-full blur-[100px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="absolute -z-10 w-[300px] h-[500px] bg-blue-500/30 rounded-full blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
                 </div>
             </div>
         </section>
