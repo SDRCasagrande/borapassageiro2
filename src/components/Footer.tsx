@@ -7,11 +7,8 @@ export function Footer() {
 
                 {/* Brand */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                        <span className="text-xl font-black italic tracking-tighter text-blue-500">BORA</span>
-                        <span className="text-lg font-bold tracking-tight text-white">PASSAGEIRO</span>
-                    </div>
-                    <p className="max-w-xs text-xs leading-relaxed">
+                    <img src="/assets/logo-bora.png" alt="Bora Passageiro" className="h-12 w-auto object-contain opacity-90" />
+                    <p className="text-blue-100/70 leading-relaxed">
                         Conectando você ao seu destino com segurança, agilidade e o melhor preço da cidade.
                     </p>
                     <div className="flex gap-4">

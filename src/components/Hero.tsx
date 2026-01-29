@@ -13,7 +13,7 @@ export function Hero() {
                         Disponível em Xinguara e Região
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">
                         Seu transporte <br />
                         rápido e seguro
                     </h1>
@@ -38,7 +38,7 @@ export function Hero() {
 
                 {/* Phone Mockup */}
                 <div className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
-                    <div className="relative w-[300px] h-[600px] bg-[#121212] rounded-[3rem] shadow-2xl border-[8px] border-[#1f1f1f] overflow-hidden transform md:rotate-y-12 md:-rotate-x-6 transition-all duration-500 hover:rotate-0">
+                    <div className="relative w-[300px] max-w-full h-[600px] bg-[#121212] rounded-[3rem] shadow-2xl border-[8px] border-[#1f1f1f] overflow-hidden transform md:rotate-y-12 md:-rotate-x-6 transition-all duration-500 hover:rotate-0">
                         {/* Notch */}
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-[#1f1f1f] rounded-b-2xl z-20"></div>
 
