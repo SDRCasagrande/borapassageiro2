@@ -15,8 +15,8 @@ export function DriverSection() {
 
                         <div className="relative bg-[#1a1f2e] border border-gray-700/50 p-8 rounded-[2.5rem] shadow-2xl max-w-sm w-full transform hover:scale-[1.02] transition-transform duration-500">
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
-                                    <div className="w-6 h-6 text-white font-bold text-center leading-none">M</div>
+                                <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg shadow-green-500/30 border-2 border-green-500">
+                                    <img src="/assets/driver-profile.png" alt="Motorista" className="w-full h-full object-cover" />
                                 </div>
                                 <div>
                                     <h3 className="text-white font-bold text-lg">Motorista Parceiro</h3>
