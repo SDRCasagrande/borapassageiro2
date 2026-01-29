@@ -38,22 +38,12 @@ export function Hero() {
 
                 {/* Phone Mockup */}
                 <div className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
-                    <div className="relative w-[300px] max-w-full h-[600px] bg-[#121212] rounded-[3rem] shadow-2xl border-[8px] border-[#1f1f1f] overflow-hidden transform md:rotate-y-12 md:-rotate-x-6 transition-all duration-500 hover:rotate-0">
-                        {/* Notch */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-[#1f1f1f] rounded-b-2xl z-20"></div>
-
-                        {/* Screen Content */}
-                        <div className="absolute inset-0 bg-gray-900 flex flex-col pt-12">
-                            {/* Screen Content - Image Asset */}
-                            <img
-                                src="/assets/app-screen.png"
-                                alt="App Bora Passageiro"
-                                className="absolute inset-0 w-full h-full object-cover"
-                            />
-
-                            {/* Phone Bottom Bar */}
-                            <div className="h-1 w-1/3 bg-gray-600 rounded-full mx-auto mb-2"></div>
-                        </div>
+                    <div className="relative w-[320px] max-w-full h-auto transform md:rotate-y-12 md:-rotate-x-6 transition-all duration-500 hover:rotate-0 filter drop-shadow-2xl">
+                        <img
+                            src="/assets/app-screen.png"
+                            alt="App Bora Passageiro"
+                            className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500"
+                        />
                     </div>
 
                     {/* Glow effect behind phone */}
