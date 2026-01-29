@@ -41,6 +41,14 @@ export function Footer() {
                 {/* Contact */}
                 <div>
                     <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-wider">Contato</h3>
+                    <div className="flex gap-4 mb-4">
+                        <a href="https://www.instagram.com/bora.passageiroxinguara/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white hover:text-cyan-400">
+                            <Instagram className="h-5 w-5" />
+                        </a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white hover:text-cyan-400">
+                            <Facebook className="h-5 w-5" />
+                        </a>
+                    </div>
                     <ul className="space-y-2">
                         <li className="flex items-center gap-2">
                             <Mail className="w-4 h-4 text-blue-500" />
