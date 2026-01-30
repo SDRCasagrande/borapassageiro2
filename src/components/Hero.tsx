@@ -8,9 +8,16 @@ export function Hero() {
             <div className="container mx-auto px-4 z-10 grid md:grid-cols-2 gap-8 items-center">
                 {/* Text Content */}
                 <div className="text-center md:text-left space-y-6">
+                    {/* Big Logo */}
+                    <img
+                        src="/assets/logo-bora-full.png"
+                        alt="Bora Passageiro PA"
+                        className="h-20 md:h-28 w-auto object-contain mx-auto md:mx-0 drop-shadow-2xl"
+                    />
+
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-lg">
                         <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                        Disponível em Xinguara e Região
+                        Disponível em Xinguara e Região - PA
                     </div>
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">

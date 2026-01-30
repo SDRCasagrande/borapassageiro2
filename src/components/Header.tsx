@@ -9,7 +9,7 @@ export function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
                 {/* Logo Area */}
                 <div className="flex items-center gap-2">
-                    <img src="/assets/logo-bora.png" alt="Bora Passageiro" className="h-12 w-auto object-contain hover:opacity-90 transition-opacity" />
+                    <img src="/assets/logo-bora.png" alt="Bora Passageiro PA" className="h-16 w-auto object-contain hover:opacity-90 transition-opacity" />
                 </div>
 
                 {/* Desktop Nav */}

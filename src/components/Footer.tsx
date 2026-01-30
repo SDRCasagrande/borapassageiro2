@@ -7,7 +7,7 @@ export function Footer() {
 
                 {/* Brand */}
                 <div className="space-y-4">
-                    <img src="/assets/logo-bora.png" alt="Bora Passageiro" className="h-12 w-auto object-contain opacity-90" />
+                    <img src="/assets/logo-bora-full.png" alt="Bora Passageiro PA" className="h-16 w-auto object-contain opacity-90" />
                     <p className="text-blue-100/70 leading-relaxed">
                         Conectando você ao seu destino com segurança, agilidade e o melhor preço da cidade.
                     </p>
