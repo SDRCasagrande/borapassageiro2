@@ -3,7 +3,8 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
     LineChart, Line
 } from 'recharts';
-import { AnalyticsService, DailyStats } from '../services/analytics';
+import { AnalyticsService } from '../services/analytics';
+import type { DailyStats } from '../services/analytics';
 import { Download, Users, Smartphone, MessageCircle, Printer, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
