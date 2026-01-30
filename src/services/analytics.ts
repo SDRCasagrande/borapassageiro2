@@ -11,7 +11,7 @@ export interface DailyStats {
 }
 
 // API Base URL - configure this based on your deployment
-const API_URL = import.meta.env.VITE_API_URL || 'https://api-bora.sfrcloud.com.br';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.bkaiser.com.br';
 
 export const AnalyticsService = {
     // Track visit
