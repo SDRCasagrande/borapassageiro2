@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Tag, Download, Smartphone } from 'lucide-react';
+import { X, Tag, Download } from 'lucide-react';
 import { AnalyticsService } from '../services/analytics';
 
 // App Store URLs
