@@ -6,6 +6,7 @@ import { Features } from './components/Features';
 import { DriverSection } from './components/DriverSection';
 import { Dashboard } from './components/Dashboard';
 import { DiscountPopup } from './components/DiscountPopup';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AnalyticsService } from './services/analytics';
 import { useEffect } from 'react';
 
@@ -25,6 +26,7 @@ function LandingPage() {
       </main>
       <Footer />
       <DiscountPopup />
+      <FloatingWhatsApp />
     </>
   );
 }

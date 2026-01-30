@@ -36,11 +36,13 @@ export const AnalyticsService = {
         }
     },
 
-    trackClick: async (type: 'playStore' | 'appStore' | 'whatsapp') => {
-        const typeMap = {
+    trackClick: async (type: 'playStore' | 'appStore' | 'whatsapp' | 'whatsapp_floating' | 'footer_phone') => {
+        const typeMap: Record<string, string> = {
             playStore: 'click_playstore',
             appStore: 'click_appstore',
             whatsapp: 'click_whatsapp',
+            whatsapp_floating: 'click_whatsapp',
+            footer_phone: 'click_whatsapp',
         };
 
         try {
