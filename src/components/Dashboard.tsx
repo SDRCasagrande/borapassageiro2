@@ -48,7 +48,8 @@ export function Dashboard() {
     }));
 
     const totalVisits = chartData.reduce((acc, curr) => acc + curr.Visitantes, 0);
-    const totalDownloads = chartData.reduce((acc, curr) => acc + curr.Downloads, 0);
+    const totalPlayStore = chartData.reduce((acc, curr) => acc + curr.PlayStore, 0);
+    const totalAppStore = chartData.reduce((acc, curr) => acc + curr.AppStore, 0);
     const totalWhatsApp = chartData.reduce((acc, curr) => acc + curr.WhatsApp, 0);
 
     const handlePrint = () => {
@@ -104,7 +105,7 @@ export function Dashboard() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
                         <div className="p-4 bg-blue-50 rounded-xl">
                             <Users className="w-8 h-8 text-blue-600" />
@@ -116,22 +117,31 @@ export function Dashboard() {
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                        <div className="p-4 bg-purple-50 rounded-xl">
-                            <Download className="w-8 h-8 text-purple-600" />
+                        <div className="p-4 bg-green-50 rounded-xl">
+                            <Download className="w-8 h-8 text-green-600" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-gray-500">Cliques Download</p>
-                            <h3 className="text-3xl font-bold text-gray-900">{totalDownloads}</h3>
-                            <p className="text-xs text-gray-400 mt-1">Play Store + Apple Store</p>
+                            <p className="text-sm font-medium text-gray-500">Play Store</p>
+                            <h3 className="text-3xl font-bold text-gray-900">{totalPlayStore}</h3>
                         </div>
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                        <div className="p-4 bg-green-50 rounded-xl">
-                            <MessageCircle className="w-8 h-8 text-green-600" />
+                        <div className="p-4 bg-gray-100 rounded-xl">
+                            <Smartphone className="w-8 h-8 text-gray-800" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-gray-500">Cliques WhatsApp</p>
+                            <p className="text-sm font-medium text-gray-500">App Store</p>
+                            <h3 className="text-3xl font-bold text-gray-900">{totalAppStore}</h3>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                        <div className="p-4 bg-emerald-50 rounded-xl">
+                            <MessageCircle className="w-8 h-8 text-emerald-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-500">WhatsApp</p>
                             <h3 className="text-3xl font-bold text-gray-900">{totalWhatsApp}</h3>
                         </div>
                     </div>
