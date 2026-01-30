@@ -2,7 +2,7 @@ import { AnalyticsService } from '../services/analytics';
 
 export function ActionButtons() {
     return (
-        <div className="flex flex-col sm:flex-row gap-6 mt-10 w-full justify-center md:justify-start">
+        <div className="flex flex-col sm:flex-row gap-6 mt-10 w-full items-center sm:justify-center md:justify-start">
             <a
                 href="https://play.google.com/store/apps/details?id=br.com.devbase.borapassageiro&pcampaignid=web_share"
                 target="_blank"

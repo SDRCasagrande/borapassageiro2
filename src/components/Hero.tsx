@@ -119,8 +119,8 @@ export function Hero() {
                             </div>
 
                             {/* Logo Overlay */}
-                            <div className="absolute top-12 left-1/2 -translate-x-1/2 opacity-20 font-black text-4xl tracking-tighter text-white select-none pointer-events-none">
-                                BORA
+                            <div className="absolute top-12 left-1/2 -translate-x-1/2 opacity-20 font-black text-3xl tracking-tighter text-white select-none pointer-events-none text-center leading-tight">
+                                BORA<br />Passageiro
                             </div>
                         </div>
 
