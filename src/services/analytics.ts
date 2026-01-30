@@ -10,78 +10,83 @@ export interface DailyStats {
     };
 }
 
-const STORAGE_KEY = 'bora_analytics';
+// API Base URL - configure this based on your deployment
+const API_URL = import.meta.env.VITE_API_URL || 'https://api-bora.sfrcloud.com.br';
 
 export const AnalyticsService = {
-    // Initialize or update visit count for today
-    trackVisit: () => {
+    // Track visit
+    trackVisit: async () => {
+        // Avoid double counting same session
         const today = new Date().toISOString().split('T')[0];
-        const data = AnalyticsService.getAllData();
+        const sessionKey = `visited_${today}`;
 
-        // Check if entry for today exists
-        const todayEntryIndex = data.findIndex(d => d.date === today);
-
-        if (todayEntryIndex >= 0) {
-            // Avoid double counting same session? simplified: just increment on load
-            // Real app usually checks session storage to not recount reload
-            const sessionKey = `visited_${today}`;
-            if (!sessionStorage.getItem(sessionKey)) {
-                data[todayEntryIndex].visits += 1;
-                sessionStorage.setItem(sessionKey, 'true');
-                AnalyticsService.saveData(data);
-            }
-        } else {
-            // Create new day entry
-            data.push({
-                date: today,
-                visits: 1,
-                clicks: { playStore: 0, appStore: 0, whatsapp: 0 }
-            });
-            sessionStorage.setItem(`visited_${today}`, 'true');
-            AnalyticsService.saveData(data);
+        if (sessionStorage.getItem(sessionKey)) {
+            return; // Already tracked this session
         }
-    },
 
-    trackClick: (type: 'playStore' | 'appStore' | 'whatsapp') => {
-        const today = new Date().toISOString().split('T')[0];
-        const data = AnalyticsService.getAllData();
-        const todayEntryIndex = data.findIndex(d => d.date === today);
-
-        if (todayEntryIndex >= 0) {
-            data[todayEntryIndex].clicks[type] += 1;
-            AnalyticsService.saveData(data);
-        } else {
-            // Should not happen if trackVisit runs on mount, but safe fallback
-            data.push({
-                date: today,
-                visits: 1, // assume visit
-                clicks: {
-                    playStore: type === 'playStore' ? 1 : 0,
-                    appStore: type === 'appStore' ? 1 : 0,
-                    whatsapp: type === 'whatsapp' ? 1 : 0
-                }
-            });
-            AnalyticsService.saveData(data);
-        }
-    },
-
-    getAllData: (): DailyStats[] => {
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            return stored ? JSON.parse(stored) : [];
-        } catch (e) {
+            await fetch(`${API_URL}/api/track`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'visit' }),
+            });
+            sessionStorage.setItem(sessionKey, 'true');
+        } catch (error) {
+            console.error('Failed to track visit:', error);
+        }
+    },
+
+    trackClick: async (type: 'playStore' | 'appStore' | 'whatsapp') => {
+        const typeMap = {
+            playStore: 'click_playstore',
+            appStore: 'click_appstore',
+            whatsapp: 'click_whatsapp',
+        };
+
+        try {
+            await fetch(`${API_URL}/api/track`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: typeMap[type] }),
+            });
+        } catch (error) {
+            console.error('Failed to track click:', error);
+        }
+    },
+
+    // Fetch stats from API for dashboard
+    getChartData: async (): Promise<DailyStats[]> => {
+        try {
+            const response = await fetch(`${API_URL}/api/stats?days=30`);
+            if (!response.ok) throw new Error('API error');
+            const data = await response.json();
+            return data.daily || [];
+        } catch (error) {
+            console.error('Failed to fetch stats:', error);
             return [];
         }
     },
 
-    saveData: (data: DailyStats[]) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Get totals for dashboard summary cards
+    getTotals: async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/stats?days=30`);
+            if (!response.ok) throw new Error('API error');
+            const data = await response.json();
+            return data.totals || { visits: 0, playStore: 0, appStore: 0, whatsapp: 0 };
+        } catch (error) {
+            console.error('Failed to fetch totals:', error);
+            return { visits: 0, playStore: 0, appStore: 0, whatsapp: 0 };
+        }
     },
 
-    // Helper for dashboard chart
-    getChartData: () => {
-        const data = AnalyticsService.getAllData();
-        // Sort by date ascending
-        return data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    }
+    // Legacy method for backward compatibility (deprecated)
+    getAllData: (): DailyStats[] => {
+        console.warn('getAllData is deprecated, use getChartData instead');
+        return [];
+    },
+
+    saveData: () => {
+        console.warn('saveData is deprecated, data is now saved via API');
+    },
 };

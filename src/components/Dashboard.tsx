@@ -11,11 +11,22 @@ import { Link } from 'react-router-dom';
 export function Dashboard() {
     const [data, setData] = useState<DailyStats[]>([]);
     const [filter, setFilter] = useState<'week' | 'month' | 'all'>('week');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Load real data
-        const allData = AnalyticsService.getChartData();
-        setData(allData);
+        // Load real data from API
+        const loadData = async () => {
+            setLoading(true);
+            try {
+                const allData = await AnalyticsService.getChartData();
+                setData(allData);
+            } catch (error) {
+                console.error('Failed to load analytics:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadData();
     }, []);
 
     const getFilteredData = () => {
@@ -168,8 +179,17 @@ export function Dashboard() {
                     </div>
                 </div>
 
+                {/* Loading State */}
+                {loading && (
+                    <div className="text-center py-20 bg-white rounded-2xl border border-gray-200">
+                        <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                        <h3 className="text-lg font-medium text-gray-900">Carregando dados...</h3>
+                        <p className="text-gray-500">Buscando estatísticas do servidor</p>
+                    </div>
+                )}
+
                 {/* Empty State / Info */}
-                {chartData.length === 0 && (
+                {!loading && chartData.length === 0 && (
                     <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
                         <Smartphone className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-gray-900">Sem dados ainda</h3>
