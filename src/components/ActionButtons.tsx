@@ -1,3 +1,4 @@
+import { AnalyticsService } from '../services/analytics';
 
 export function ActionButtons() {
     return (
@@ -6,6 +7,7 @@ export function ActionButtons() {
                 href="https://play.google.com/store/apps/details?id=br.com.devbase.borapassageiro&pcampaignid=web_share"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => AnalyticsService.trackClick('playStore')}
                 className="transform hover:scale-105 transition-transform duration-300 drop-shadow-xl"
             >
                 <img
@@ -19,6 +21,7 @@ export function ActionButtons() {
                 href="https://apps.apple.com/br/app/bora-passageiro-clientes/id1579518558"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => AnalyticsService.trackClick('appStore')}
                 className="transform hover:scale-105 transition-transform duration-300 drop-shadow-xl"
             >
                 <img

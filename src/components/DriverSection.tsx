@@ -1,4 +1,5 @@
 import { CheckCircle2 } from 'lucide-react';
+import { AnalyticsService } from '../services/analytics';
 
 // Using inline SVG for Whatsapp to ensure brand accuracy and avoid icon library issues.
 
@@ -79,6 +80,7 @@ export function DriverSection() {
                             href="https://wa.me/5594992777717"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => AnalyticsService.trackClick('whatsapp')}
                             className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-green-500/20 transform hover:-translate-y-1 transition-all"
                         >
                             {/* SVG for specific whatsapp look */}
