@@ -4,7 +4,7 @@ import {
     LineChart, Line, PieChart, Pie, Cell
 } from 'recharts';
 import { AnalyticsService } from '../services/analytics';
-import { Download, Users, Smartphone, MessageCircle, Printer, ArrowLeft, MapPin, Globe, LogOut } from 'lucide-react';
+import { Download, Users, Smartphone, MessageCircle, Printer, ArrowLeft, MapPin, Globe, LogOut, Settings, Layout } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Dashboard() {
@@ -81,6 +81,8 @@ export function Dashboard() {
                             <button onClick={() => setFilter('month')} className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'month' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}>30 Dias</button>
                         </div>
                         <button onClick={handlePrint} className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"><Printer className="w-5 h-5" /></button>
+                        <Link to="/content" className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200" title="Gerenciar Site"><Layout className="w-5 h-5" /></Link>
+                        <Link to="/integrations" className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200" title="Integrações"><Settings className="w-5 h-5" /></Link>
                         <button onClick={handleLogout} className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"><LogOut className="w-5 h-5" /></button>
                     </div>
                 </div>
@@ -184,7 +186,7 @@ export function Dashboard() {
                                             paddingAngle={5}
                                             dataKey="count"
                                         >
-                                            {topSources.map((entry: any, index: number) => (
+                                            {topSources.map((_entry: any, index: number) => (
                                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                             ))}
                                         </Pie>
