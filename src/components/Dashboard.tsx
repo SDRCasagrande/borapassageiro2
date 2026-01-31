@@ -101,8 +101,6 @@ export function Dashboard() {
     // Calculate daily average
     const avgVisits = Math.round(chartData.reduce((sum: number, d: any) => sum + d.Visitantes, 0) / chartData.length);
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
-
     const filterButtons = [
         { key: 'today', label: 'Hoje', icon: Clock },
         { key: 'yesterday', label: 'Ontem', icon: Calendar },
