@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Play } from 'lucide-react';
 
 const API_URL = 'https://api.bkaiser.com.br';
 

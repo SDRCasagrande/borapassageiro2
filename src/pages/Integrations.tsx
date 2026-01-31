@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Save, HelpCircle } from 'lucide-react';
+import { ArrowLeft, HelpCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AnalyticsService } from '../services/analytics'; // We can reuse or extend this, but I'll use direct fetch for now for simplicity or extend service later.
 
 const API_URL = 'https://api.bkaiser.com.br';
 
