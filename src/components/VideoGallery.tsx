@@ -21,7 +21,7 @@ export function VideoGallery() {
         <section className="py-20 bg-gray-50" id="galeria">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bora na Prática</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bora BLOG - PA</h2>
                     <p className="text-xl text-gray-600">Veja quem já está usando e aprovando!</p>
                 </div>
 

@@ -1,23 +1,41 @@
 import { useState, useEffect } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-    LineChart, Line, PieChart, Pie, Cell
+    LineChart, Line, PieChart, Pie, Cell, AreaChart, Area
 } from 'recharts';
 import { AnalyticsService } from '../services/analytics';
-import { Download, Users, Smartphone, MessageCircle, Printer, ArrowLeft, MapPin, Globe, LogOut, Settings, Layout } from 'lucide-react';
+import { Download, Users, Smartphone, MessageCircle, Printer, ArrowLeft, MapPin, Globe, LogOut, Settings, Layout, Calendar, TrendingUp, TrendingDown, Clock } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+
+type FilterType = 'today' | 'yesterday' | 'week' | 'month' | 'custom';
 
 export function Dashboard() {
     const [data, setData] = useState<any>(null);
-    const [filter, setFilter] = useState<'week' | 'month' | 'all'>('week');
+    const [filter, setFilter] = useState<FilterType>('week');
     const [loading, setLoading] = useState(true);
+    const [showCustomDate, setShowCustomDate] = useState(false);
+    const [customStartDate, setCustomStartDate] = useState('');
+    const [customEndDate, setCustomEndDate] = useState('');
     const navigate = useNavigate();
+
+    // Calculate days based on filter
+    const getDaysFromFilter = (f: FilterType) => {
+        switch (f) {
+            case 'today': return 1;
+            case 'yesterday': return 2;
+            case 'week': return 7;
+            case 'month': return 30;
+            case 'custom': return 90; // Will be refined with actual dates
+            default: return 7;
+        }
+    };
 
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
             try {
-                const response = await AnalyticsService.getChartData(filter === 'all' ? 90 : filter === 'week' ? 7 : 30);
+                const days = getDaysFromFilter(filter);
+                const response = await AnalyticsService.getChartData(days);
                 setData(response);
             } catch (error: any) {
                 if (error.message === 'Unauthorized') {
@@ -29,6 +47,22 @@ export function Dashboard() {
         };
         loadData();
     }, [filter, navigate]);
+
+    const handleFilterChange = (newFilter: FilterType) => {
+        if (newFilter === 'custom') {
+            setShowCustomDate(true);
+        } else {
+            setShowCustomDate(false);
+            setFilter(newFilter);
+        }
+    };
+
+    const applyCustomDate = () => {
+        if (customStartDate && customEndDate) {
+            setFilter('custom');
+            setShowCustomDate(false);
+        }
+    };
 
     const handlePrint = () => {
         window.print();
@@ -51,6 +85,7 @@ export function Dashboard() {
     // Format daily data for charts
     const chartData = daily.map((d: any) => ({
         date: d.date.split('-').slice(1).join('/'),
+        fullDate: d.date,
         Visitantes: d.visits,
         Downloads: d.clicks.playStore + d.clicks.appStore,
         WhatsApp: d.clicks.whatsapp,
@@ -58,7 +93,23 @@ export function Dashboard() {
         AppStore: d.clicks.appStore
     }));
 
+    // Find best and worst days
+    const sortedByVisits = [...chartData].sort((a, b) => b.Visitantes - a.Visitantes);
+    const bestDay = sortedByVisits[0];
+    const worstDay = sortedByVisits[sortedByVisits.length - 1];
+
+    // Calculate daily average
+    const avgVisits = Math.round(chartData.reduce((sum: number, d: any) => sum + d.Visitantes, 0) / chartData.length);
+
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+
+    const filterButtons = [
+        { key: 'today', label: 'Hoje', icon: Clock },
+        { key: 'yesterday', label: 'Ontem', icon: Calendar },
+        { key: 'week', label: '7 Dias', icon: null },
+        { key: 'month', label: '30 Dias', icon: null },
+        { key: 'custom', label: 'Período', icon: Calendar },
+    ];
 
     return (
         <div className="min-h-screen bg-gray-50 p-8 font-sans">
@@ -75,10 +126,19 @@ export function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="flex gap-2">
-                        <div className="bg-white rounded-lg p-1 shadow flex">
-                            <button onClick={() => setFilter('week')} className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'week' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}>7 Dias</button>
-                            <button onClick={() => setFilter('month')} className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'month' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}>30 Dias</button>
+                    <div className="flex gap-2 items-center flex-wrap">
+                        {/* Date Filter Buttons */}
+                        <div className="bg-white rounded-lg p-1 shadow flex flex-wrap">
+                            {filterButtons.map((btn) => (
+                                <button
+                                    key={btn.key}
+                                    onClick={() => handleFilterChange(btn.key as FilterType)}
+                                    className={`px-3 py-2 text-sm font-medium rounded-md flex items-center gap-1 ${filter === btn.key ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}
+                                >
+                                    {btn.icon && <btn.icon className="w-4 h-4" />}
+                                    {btn.label}
+                                </button>
+                            ))}
                         </div>
                         <button onClick={handlePrint} className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"><Printer className="w-5 h-5" /></button>
                         <Link to="/content" className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200" title="Gerenciar Site"><Layout className="w-5 h-5" /></Link>
@@ -86,6 +146,43 @@ export function Dashboard() {
                         <button onClick={handleLogout} className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"><LogOut className="w-5 h-5" /></button>
                     </div>
                 </div>
+
+                {/* Custom Date Picker */}
+                {showCustomDate && (
+                    <div className="bg-white p-4 rounded-xl shadow-lg border border-blue-200 flex flex-wrap items-center gap-4 animate-fade-in">
+                        <Calendar className="w-5 h-5 text-blue-600" />
+                        <div className="flex items-center gap-2">
+                            <label className="text-sm text-gray-600">De:</label>
+                            <input
+                                type="date"
+                                value={customStartDate}
+                                onChange={(e) => setCustomStartDate(e.target.value)}
+                                className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <label className="text-sm text-gray-600">Até:</label>
+                            <input
+                                type="date"
+                                value={customEndDate}
+                                onChange={(e) => setCustomEndDate(e.target.value)}
+                                className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+                        </div>
+                        <button
+                            onClick={applyCustomDate}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+                        >
+                            Aplicar
+                        </button>
+                        <button
+                            onClick={() => setShowCustomDate(false)}
+                            className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                )}
 
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -107,11 +204,61 @@ export function Dashboard() {
                     </div>
                 </div>
 
+                {/* Daily Comparison Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-6 rounded-2xl shadow-lg text-white">
+                        <div className="flex items-center gap-2 mb-2">
+                            <TrendingUp className="w-5 h-5" />
+                            <span className="text-sm font-medium opacity-90">Melhor Dia</span>
+                        </div>
+                        <h3 className="text-3xl font-bold">{bestDay?.Visitantes || 0} visitas</h3>
+                        <p className="text-sm opacity-80 mt-1">{bestDay?.date || '-'}</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-orange-500 to-red-500 p-6 rounded-2xl shadow-lg text-white">
+                        <div className="flex items-center gap-2 mb-2">
+                            <TrendingDown className="w-5 h-5" />
+                            <span className="text-sm font-medium opacity-90">Menor Dia</span>
+                        </div>
+                        <h3 className="text-3xl font-bold">{worstDay?.Visitantes || 0} visitas</h3>
+                        <p className="text-sm opacity-80 mt-1">{worstDay?.date || '-'}</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-2xl shadow-lg text-white">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Users className="w-5 h-5" />
+                            <span className="text-sm font-medium opacity-90">Média Diária</span>
+                        </div>
+                        <h3 className="text-3xl font-bold">{avgVisits} visitas</h3>
+                        <p className="text-sm opacity-80 mt-1">por dia</p>
+                    </div>
+                </div>
+
                 {/* Main Charts */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Area Chart - Comparison */}
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
+                        <h3 className="text-lg font-bold text-gray-900 mb-6">📊 Comparativo de Acessos</h3>
+                        <ResponsiveContainer width="100%" height={320}>
+                            <AreaChart data={chartData}>
+                                <defs>
+                                    <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
+                                <Tooltip
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                />
+                                <Area type="monotone" dataKey="Visitantes" stroke="#3b82f6" strokeWidth={3} fill="url(#colorVisits)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
                         <h3 className="text-lg font-bold text-gray-900 mb-6">Tráfego vs Conversão</h3>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer width="100%" height={320}>
                             <LineChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
                                 <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
@@ -123,10 +270,13 @@ export function Dashboard() {
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
+                </div>
 
+                {/* Second Row Charts */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
                         <h3 className="text-lg font-bold text-gray-900 mb-6">Detalhamento de Conversão</h3>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer width="100%" height={320}>
                             <BarChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
                                 <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
@@ -139,10 +289,7 @@ export function Dashboard() {
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
 
-                {/* New Insights Section (Geography & Sources) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Top Cities */}
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex items-center gap-2 mb-6">
@@ -165,42 +312,43 @@ export function Dashboard() {
                             )}
                         </div>
                     </div>
+                </div>
 
-                    {/* Traffic Sources */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <div className="flex items-center gap-2 mb-6">
-                            <Globe className="w-5 h-5 text-purple-600" />
-                            <h3 className="text-lg font-bold text-gray-900">Origem do Tráfego (UTM)</h3>
-                        </div>
-                        <div className="h-[300px]">
-                            {topSources.length > 0 ? (
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart>
-                                        <Pie
-                                            data={topSources}
-                                            cx="50%"
-                                            cy="50%"
-                                            innerRadius={60}
-                                            outerRadius={100}
-                                            fill="#8884d8"
-                                            paddingAngle={5}
-                                            dataKey="count"
-                                        >
-                                            {topSources.map((_entry: any, index: number) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip />
-                                        <Legend />
-                                    </PieChart>
-                                </ResponsiveContainer>
-                            ) : (
-                                <p className="text-gray-400 italic text-center py-12">Sem dados de origem ainda</p>
-                            )}
-                        </div>
+                {/* Traffic Sources */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 mb-6">
+                        <Globe className="w-5 h-5 text-purple-600" />
+                        <h3 className="text-lg font-bold text-gray-900">Origem do Tráfego (UTM)</h3>
+                    </div>
+                    <div className="h-[300px]">
+                        {topSources.length > 0 ? (
+                            <ResponsiveContainer width="100%" height={280}>
+                                <PieChart>
+                                    <Pie
+                                        data={topSources}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={100}
+                                        fill="#8884d8"
+                                        paddingAngle={5}
+                                        dataKey="count"
+                                    >
+                                        {topSources.map((_entry: any, index: number) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <p className="text-gray-400 italic text-center py-12">Sem dados de origem ainda</p>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+

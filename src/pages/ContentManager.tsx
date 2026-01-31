@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Trash2, Save, Layout, Youtube, Megaphone } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Save, Layout, Youtube, Megaphone, Gift, Tag, Percent } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://api.bkaiser.com.br';
+
+interface PromoCode {
+    id?: string;
+    code: string;
+    discount: string;
+    description: string;
+    isActive: boolean;
+}
 
 export function ContentManager() {
     const navigate = useNavigate();
@@ -12,8 +20,13 @@ export function ContentManager() {
     // New Item State
     const [newItem, setNewItem] = useState({ type: 'youtube', title: '', url: '', section: 'gallery' });
 
-    // Promo State (managed as a specialized content item)
+    // Promo Bar State
     const [promo, setPromo] = useState({ enabled: false, text: '' });
+
+    // Popup Promo Codes State
+    const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
+    const [newPromoCode, setNewPromoCode] = useState<PromoCode>({ code: '', discount: '', description: '', isActive: true });
+    const [popupConfig, setPopupConfig] = useState({ enabled: true, title: 'Oferta Exclusiva!', subtitle: 'Baixe agora e ganhe desconto!' });
 
     useEffect(() => {
         loadContent();
@@ -154,14 +167,14 @@ export function ContentManager() {
                                 <input
                                     type="text"
                                     placeholder="Título (Opcional)"
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 placeholder:text-gray-400"
                                     value={newItem.title}
                                     onChange={e => setNewItem({ ...newItem, title: e.target.value })}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Link do YouTube (ex: https://youtu.be/...)"
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 placeholder:text-gray-400"
                                     value={newItem.url}
                                     onChange={e => setNewItem({ ...newItem, url: e.target.value })}
                                 />
@@ -236,7 +249,7 @@ export function ContentManager() {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem da Barra</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-yellow-500"
+                                        className="w-full px-4 py-3 rounded-xl border-2 border-yellow-400 outline-none focus:ring-2 focus:ring-yellow-500 bg-white text-gray-900 placeholder:text-gray-400"
                                         placeholder="Ex: Use o cupom BORA10 e ganhe 10% OFF!"
                                         value={promo.text}
                                         onChange={e => setPromo({ ...promo, text: e.target.value })}
@@ -264,6 +277,130 @@ export function ContentManager() {
                             >
                                 Abrir Site
                             </Link>
+                        </div>
+
+                        {/* Popup Promo Section */}
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                                <div className="p-2 rounded-lg bg-purple-50 text-purple-600">
+                                    <Gift className="w-6 h-6" />
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-bold text-gray-900">Popup de Promoção</h3>
+                                    <p className="text-sm text-gray-500">Configure o popup de desconto</p>
+                                </div>
+                                <button
+                                    onClick={() => setPopupConfig({ ...popupConfig, enabled: !popupConfig.enabled })}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${popupConfig.enabled ? 'bg-green-500' : 'bg-gray-300'}`}
+                                >
+                                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${popupConfig.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                                </button>
+                            </div>
+
+                            <div className="space-y-4">
+                                {/* Popup Title */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Título do Popup</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-900"
+                                        placeholder="Ex: Oferta Exclusiva!"
+                                        value={popupConfig.title}
+                                        onChange={e => setPopupConfig({ ...popupConfig, title: e.target.value })}
+                                    />
+                                </div>
+
+                                {/* Popup Subtitle */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Texto do Popup</label>
+                                    <textarea
+                                        rows={2}
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-900"
+                                        placeholder="Ex: Baixe agora e ganhe 50% OFF!"
+                                        value={popupConfig.subtitle}
+                                        onChange={e => setPopupConfig({ ...popupConfig, subtitle: e.target.value })}
+                                    />
+                                </div>
+
+                                {/* Add Promo Code */}
+                                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-100">
+                                    <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                        <Tag className="w-4 h-4 text-purple-600" />
+                                        Adicionar Código de Desconto
+                                    </h4>
+                                    <div className="grid grid-cols-2 gap-2 mb-3">
+                                        <input
+                                            type="text"
+                                            className="px-3 py-2 rounded-lg border border-purple-200 outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-900 text-sm"
+                                            placeholder="Código (ex: BORA50)"
+                                            value={newPromoCode.code}
+                                            onChange={e => setNewPromoCode({ ...newPromoCode, code: e.target.value.toUpperCase() })}
+                                        />
+                                        <input
+                                            type="text"
+                                            className="px-3 py-2 rounded-lg border border-purple-200 outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-900 text-sm"
+                                            placeholder="Desconto (ex: 50%)"
+                                            value={newPromoCode.discount}
+                                            onChange={e => setNewPromoCode({ ...newPromoCode, discount: e.target.value })}
+                                        />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="w-full px-3 py-2 rounded-lg border border-purple-200 outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-900 text-sm mb-3"
+                                        placeholder="Descrição (ex: nas primeiras 5 corridas)"
+                                        value={newPromoCode.description}
+                                        onChange={e => setNewPromoCode({ ...newPromoCode, description: e.target.value })}
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            if (newPromoCode.code && newPromoCode.discount) {
+                                                setPromoCodes([...promoCodes, { ...newPromoCode, id: Date.now().toString() }]);
+                                                setNewPromoCode({ code: '', discount: '', description: '', isActive: true });
+                                            }
+                                        }}
+                                        className="w-full py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-bold text-sm flex items-center justify-center gap-2"
+                                    >
+                                        <Plus className="w-4 h-4" /> Adicionar Código
+                                    </button>
+                                </div>
+
+                                {/* List of Promo Codes */}
+                                {promoCodes.length > 0 && (
+                                    <div className="space-y-2">
+                                        <h4 className="font-medium text-gray-700 flex items-center gap-2">
+                                            <Percent className="w-4 h-4" />
+                                            Códigos Ativos ({promoCodes.length})
+                                        </h4>
+                                        {promoCodes.map((code) => (
+                                            <div key={code.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="px-2 py-1 bg-purple-100 text-purple-700 font-mono font-bold text-sm rounded">{code.code}</span>
+                                                    <span className="text-green-600 font-bold">{code.discount}</span>
+                                                    <span className="text-gray-500 text-sm">{code.description}</span>
+                                                </div>
+                                                <button
+                                                    onClick={() => setPromoCodes(promoCodes.filter(c => c.id !== code.id))}
+                                                    className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={() => {
+                                        // TODO: Save to API when backend is ready
+                                        localStorage.setItem('bp_popup_config', JSON.stringify(popupConfig));
+                                        localStorage.setItem('bp_promo_codes', JSON.stringify(promoCodes));
+                                        alert('Configurações do Popup salvas!');
+                                    }}
+                                    className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-xl hover:from-purple-700 hover:to-pink-600 font-bold shadow-lg flex items-center justify-center gap-2"
+                                >
+                                    <Save className="w-4 h-4" /> Salvar Popup
+                                </button>
+                            </div>
                         </div>
 
                     </div>

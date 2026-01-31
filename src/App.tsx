@@ -39,6 +39,7 @@ function LandingPage() {
 import { Login } from './pages/Login';
 import { Integrations } from './pages/Integrations';
 import { ContentManager } from './pages/ContentManager';
+import { CookieConsent } from './components/CookieConsent';
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/content" element={<ContentManager />} />
         </Routes>
+        {/* Cookie Consent Banner - LGPD Compliance */}
+        <CookieConsent companyName="Bora Passageiro" />
       </div>
     </Router>
   )
