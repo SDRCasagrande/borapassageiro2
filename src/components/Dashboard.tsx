@@ -232,11 +232,15 @@ export function Dashboard() {
                     </div>
                 </div>
 
-                {/* Main Charts */}
+                {/* Main Charts - Premium Styled */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Area Chart - Comparison */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
-                        <h3 className="text-lg font-bold text-gray-900 mb-6">📊 Comparativo de Acessos</h3>
+                    <div className="bg-gradient-to-br from-white to-blue-50 p-6 rounded-2xl shadow-lg border border-blue-100 h-[400px] relative overflow-hidden">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-cyan-400" />
+                        <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-sm">📊</span>
+                            Comparativo de Acessos
+                        </h3>
                         <ResponsiveContainer width="100%" height={320}>
                             <AreaChart data={chartData}>
                                 <defs>
@@ -245,67 +249,106 @@ export function Dashboard() {
                                         <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e0e7ff" />
+                                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)', background: 'rgba(255,255,255,0.95)' }}
                                 />
                                 <Area type="monotone" dataKey="Visitantes" stroke="#3b82f6" strokeWidth={3} fill="url(#colorVisits)" />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
-                        <h3 className="text-lg font-bold text-gray-900 mb-6">Tráfego vs Conversão</h3>
+                    <div className="bg-gradient-to-br from-white to-purple-50 p-6 rounded-2xl shadow-lg border border-purple-100 h-[400px] relative overflow-hidden">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-pink-400" />
+                        <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <span className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-sm">📈</span>
+                            Tráfego vs Conversão
+                        </h3>
                         <ResponsiveContainer width="100%" height={320}>
                             <LineChart data={chartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                                <defs>
+                                    <linearGradient id="colorLine1" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stopColor="#3b82f6" />
+                                        <stop offset="100%" stopColor="#06b6d4" />
+                                    </linearGradient>
+                                    <linearGradient id="colorLine2" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stopColor="#a855f7" />
+                                        <stop offset="100%" stopColor="#ec4899" />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3e8ff" />
+                                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+                                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)', background: 'rgba(255,255,255,0.95)' }} />
                                 <Legend />
-                                <Line type="monotone" dataKey="Visitantes" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} />
-                                <Line type="monotone" dataKey="Downloads" stroke="#a855f7" strokeWidth={3} dot={{ r: 4 }} />
+                                <Line type="monotone" dataKey="Visitantes" stroke="url(#colorLine1)" strokeWidth={3} dot={{ r: 5, fill: '#3b82f6' }} activeDot={{ r: 7 }} />
+                                <Line type="monotone" dataKey="Downloads" stroke="url(#colorLine2)" strokeWidth={3} dot={{ r: 5, fill: '#a855f7' }} activeDot={{ r: 7 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                {/* Second Row Charts */}
+                {/* Second Row Charts - Premium Styled */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
-                        <h3 className="text-lg font-bold text-gray-900 mb-6">Detalhamento de Conversão</h3>
+                    <div className="bg-gradient-to-br from-white to-emerald-50 p-6 rounded-2xl shadow-lg border border-emerald-100 h-[400px] relative overflow-hidden">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-400" />
+                        <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <span className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center text-sm">📊</span>
+                            Detalhamento de Conversão
+                        </h3>
                         <ResponsiveContainer width="100%" height={320}>
                             <BarChart data={chartData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} cursor={{ fill: 'transparent' }} />
+                                <defs>
+                                    <linearGradient id="barPlayStore" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#22c55e" />
+                                        <stop offset="100%" stopColor="#16a34a" />
+                                    </linearGradient>
+                                    <linearGradient id="barAppStore" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#374151" />
+                                        <stop offset="100%" stopColor="#111827" />
+                                    </linearGradient>
+                                    <linearGradient id="barWhatsApp" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#25d366" />
+                                        <stop offset="100%" stopColor="#128c7e" />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#d1fae5" />
+                                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+                                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)', background: 'rgba(255,255,255,0.95)' }} cursor={{ fill: 'rgba(16, 185, 129, 0.1)' }} />
                                 <Legend />
-                                <Bar dataKey="PlayStore" fill="#22c55e" radius={[4, 4, 0, 0]} stackId="a" />
-                                <Bar dataKey="AppStore" fill="#000000" radius={[4, 4, 0, 0]} stackId="a" />
-                                <Bar dataKey="WhatsApp" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="PlayStore" fill="url(#barPlayStore)" radius={[6, 6, 0, 0]} stackId="a" />
+                                <Bar dataKey="AppStore" fill="url(#barAppStore)" radius={[6, 6, 0, 0]} stackId="a" />
+                                <Bar dataKey="WhatsApp" fill="url(#barWhatsApp)" radius={[6, 6, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
 
-                    {/* Top Cities */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    {/* Top Cities - Premium */}
+                    <div className="bg-gradient-to-br from-white to-amber-50 p-6 rounded-2xl shadow-lg border border-amber-100 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-400" />
                         <div className="flex items-center gap-2 mb-6">
-                            <MapPin className="w-5 h-5 text-blue-600" />
+                            <span className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                <MapPin className="w-4 h-4 text-amber-600" />
+                            </span>
                             <h3 className="text-lg font-bold text-gray-900">Top Cidades</h3>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                             {topCities.length > 0 ? topCities.map((city: any, index: number) => (
-                                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div key={index} className="flex items-center justify-between p-4 bg-white/80 rounded-xl border border-amber-100 hover:shadow-md transition-shadow">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${index === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white' :
+                                            index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400 text-white' :
+                                                index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700 text-white' :
+                                                    'bg-amber-100 text-amber-700'
+                                            }`}>
                                             {index + 1}
                                         </div>
                                         <span className="font-medium text-gray-700">{city.name}</span>
                                     </div>
-                                    <span className="font-bold text-gray-900">{city.count} visitas</span>
+                                    <span className="font-bold text-gray-900 bg-amber-100 px-3 py-1 rounded-full text-sm">{city.count} visitas</span>
                                 </div>
                             )) : (
                                 <p className="text-gray-400 italic text-center py-8">Sem dados de localização ainda</p>
@@ -314,31 +357,57 @@ export function Dashboard() {
                     </div>
                 </div>
 
-                {/* Traffic Sources */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                {/* Traffic Sources - Premium */}
+                <div className="bg-gradient-to-br from-white to-indigo-50 p-6 rounded-2xl shadow-lg border border-indigo-100 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-400 to-purple-400" />
                     <div className="flex items-center gap-2 mb-6">
-                        <Globe className="w-5 h-5 text-purple-600" />
+                        <span className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <Globe className="w-4 h-4 text-indigo-600" />
+                        </span>
                         <h3 className="text-lg font-bold text-gray-900">Origem do Tráfego (UTM)</h3>
                     </div>
                     <div className="h-[300px]">
                         {topSources.length > 0 ? (
                             <ResponsiveContainer width="100%" height={280}>
                                 <PieChart>
+                                    <defs>
+                                        <linearGradient id="pieColor1" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#3b82f6" />
+                                            <stop offset="100%" stopColor="#1d4ed8" />
+                                        </linearGradient>
+                                        <linearGradient id="pieColor2" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#22c55e" />
+                                            <stop offset="100%" stopColor="#15803d" />
+                                        </linearGradient>
+                                        <linearGradient id="pieColor3" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#f59e0b" />
+                                            <stop offset="100%" stopColor="#d97706" />
+                                        </linearGradient>
+                                        <linearGradient id="pieColor4" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#ec4899" />
+                                            <stop offset="100%" stopColor="#be185d" />
+                                        </linearGradient>
+                                        <linearGradient id="pieColor5" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#8b5cf6" />
+                                            <stop offset="100%" stopColor="#6d28d9" />
+                                        </linearGradient>
+                                    </defs>
                                     <Pie
                                         data={topSources}
                                         cx="50%"
                                         cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={100}
+                                        innerRadius={70}
+                                        outerRadius={110}
                                         fill="#8884d8"
-                                        paddingAngle={5}
+                                        paddingAngle={3}
                                         dataKey="count"
+                                        stroke="none"
                                     >
                                         {topSources.map((_entry: any, index: number) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell-${index}`} fill={`url(#pieColor${(index % 5) + 1})`} />
                                         ))}
                                     </Pie>
-                                    <Tooltip />
+                                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)', background: 'rgba(255,255,255,0.95)' }} />
                                     <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
