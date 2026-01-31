@@ -31,12 +31,15 @@ function LandingPage() {
   );
 }
 
+import { Login } from './pages/Login';
+
 function App() {
   return (
     <Router>
       <div className="min-h-screen font-sans selection:bg-blue-500 selection:text-white">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>

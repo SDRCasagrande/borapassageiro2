@@ -57,18 +57,34 @@ export const AnalyticsService = {
     },
 
     // Fetch stats from API for dashboard
-    getChartData: async (): Promise<DailyStats[]> => {
+    async getChartData(days = 30) {
         try {
-            const response = await fetch(`${API_URL}/api/stats?days=30`);
-            if (!response.ok) throw new Error('API error');
+            const token = localStorage.getItem('bp_admin_token');
+            const headers: any = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(`${API_URL}/api/stats?days=${days}`, {
+                headers
+            });
+
+            if (response.status === 401) {
+                throw new Error('Unauthorized');
+            }
+
             const data = await response.json();
-            return data.daily || [];
+            return data;
         } catch (error) {
             console.error('Failed to fetch stats:', error);
-            return [];
+            throw error;
         }
     },
 
+    logout() {
+        localStorage.removeItem('bp_admin_token');
+        window.location.href = '/login';
+    },
     // Get totals for dashboard summary cards
     getTotals: async () => {
         try {
