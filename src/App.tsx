@@ -21,6 +21,20 @@ function LandingPage() {
     AnalyticsService.trackVisit();
   }, []);
 
+  // Scroll to hash on page load (SPA fix)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Wait for DOM to render all sections
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    }
+  }, []);
+
   return (
     <>
       <PromoBanner />
