@@ -24,7 +24,7 @@ export function Footer() {
                         <li><a href="#como-funciona" className="hover:text-blue-400 transition-colors">Como Funciona</a></li>
                         <li><a href="#seguranca" className="hover:text-blue-400 transition-colors">Segurança</a></li>
                         <li><a href="#depoimentos" className="hover:text-blue-400 transition-colors">Depoimentos</a></li>
-                        <li><a href="#motorista" className="hover:text-blue-400 transition-colors">Seja Motorista</a></li>
+                        <li><a href="#seja-um-motorista" className="hover:text-blue-400 transition-colors">Seja Motorista</a></li>
                     </ul>
                 </div>
 

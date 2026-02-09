@@ -9,7 +9,7 @@ export function Header() {
         { href: '#como-funciona', label: 'Como Funciona' },
         { href: '#seguranca', label: 'Segurança' },
         { href: '#depoimentos', label: 'Depoimentos' },
-        { href: '#motorista', label: 'Seja Motorista' },
+        { href: '#seja-um-motorista', label: 'Seja Motorista' },
     ];
 
     return (
