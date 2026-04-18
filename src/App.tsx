@@ -1,38 +1,18 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { Footer } from './components/Footer';
-import { Features } from './components/Features';
+import { PassageiroV2 } from './pages/v3/PassageiroV2';
+import { MotoristaV2 } from './pages/v3/MotoristaV2';
 import { Dashboard } from './components/Dashboard';
-import { DiscountPopup } from './components/DiscountPopup';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
-import { HowItWorks } from './components/HowItWorks';
-import { Testimonials } from './components/Testimonials';
-import { LeadFormPassageiro } from './components/LeadFormPassageiro';
 import { AnalyticsService } from './services/analytics';
 import { useEffect } from 'react';
 
-import { PromoBanner } from './components/PromoBanner';
-import { VideoGallery } from './components/VideoGallery';
 import { CookieConsent } from './components/CookieConsent';
-
-import { DriverSection } from './components/DriverSection';
+import { SplitHero } from './components/v3/SplitHero';
 
 /* ─── HOME PAGE (DOMÍNIO PRINCIPAL JUNTADO) ──── */
 function HomePage() {
   useEffect(() => {
     AnalyticsService.trackVisit();
-  }, []);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      setTimeout(() => {
-        const el = document.querySelector(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 500);
-    }
   }, []);
 
   return (
@@ -46,68 +26,11 @@ function HomePage() {
         <meta property="og:url" content="https://borapassageiroxinguara.com.br" />
         <meta property="og:image" content="https://borapassageiroxinguara.com.br/assets/logo-bora-full.png" />
       </Helmet>
-      <PromoBanner />
-      <Header />
-      <main>
-        <Hero />
-        <HowItWorks />
-        
-        {/* Adiciona chamativa para Motorista no fluxo da home */}
-        <DriverSection />
-        
-        <VideoGallery />
-        <Features />
-        <Testimonials />
-        <LeadFormPassageiro />
+      
+      <main className="min-h-screen bg-[#030712]">
+        <SplitHero />
       </main>
-      <Footer />
-      <DiscountPopup />
-      <FloatingWhatsApp />
-      <CookieConsent companyName="Bora Passageiro" />
-    </>
-  );
-}
-
-/* ─── LANDING PASSAGEIRO (TRÁFEGO PAGO) ──────── */
-function SitePassageiro() {
-  useEffect(() => {
-    AnalyticsService.trackVisit();
-  }, []);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      setTimeout(() => {
-        const el = document.querySelector(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 500);
-    }
-  }, []);
-
-  return (
-    <>
-      <Helmet>
-        <title>Bora Passageiro | Transporte por App em Xinguara e Região - PA</title>
-        <meta name="description" content="Bora Passageiro — seu app de transporte em Xinguara, PA. Corridas rápidas, seguras e com preço justo. Baixe agora na Play Store ou App Store!" />
-        <link rel="canonical" href="https://borapassageiroxinguara.com.br/passageiro" />
-        <meta property="og:title" content="Bora Passageiro — Transporte Rápido e Seguro em Xinguara" />
-        <meta property="og:description" content="Peça sua corrida em segundos. Carros e motos à disposição em Xinguara e região. Baixe o app agora!" />
-        <meta property="og:url" content="https://borapassageiroxinguara.com.br/passageiro" />
-        <meta property="og:image" content="https://borapassageiroxinguara.com.br/assets/logo-bora-full.png" />
-      </Helmet>
-      <PromoBanner />
-      <Header />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <VideoGallery />
-        <Features />
-        <Testimonials />
-        <LeadFormPassageiro />
-      </main>
-      <Footer />
-      <DiscountPopup />
-      <FloatingWhatsApp />
+      
       <CookieConsent companyName="Bora Passageiro" />
     </>
   );
@@ -117,7 +40,6 @@ function SitePassageiro() {
 import { Login } from './pages/Login';
 import { Integrations } from './pages/Integrations';
 import { ContentManager } from './pages/ContentManager';
-import { Motorista } from './pages/Motorista';
 
 // Auth guard for protected routes
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -135,9 +57,9 @@ function App() {
   // Decide qual componente renderizar na rota raiz (/) com base no subdomínio
   let RootComponent = <HomePage />;
   if (hostname.startsWith('motorista.')) {
-    RootComponent = <Motorista />;
+    RootComponent = <MotoristaV2 />;
   } else if (hostname.startsWith('passageiro.')) {
-    RootComponent = <SitePassageiro />;
+    RootComponent = <PassageiroV2 />;
   }
 
   return (
@@ -148,8 +70,8 @@ function App() {
           <Route path="/" element={RootComponent} />
 
           {/* Mantém as rotas de path explícitas para garantir funcionamento de links diretos */}
-          <Route path="/passageiro" element={<SitePassageiro />} />
-          <Route path="/motorista" element={<Motorista />} />
+          <Route path="/passageiro" element={<PassageiroV2 />} />
+          <Route path="/motorista" element={<MotoristaV2 />} />
 
           {/* Admin Routes (shared) */}
           <Route path="/login" element={<Login />} />
