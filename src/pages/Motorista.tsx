@@ -65,7 +65,7 @@ function MotoristaHero() {
 
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-lg">
                         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        Vagas abertas — Xinguara e Região
+                        App Legalizado — Vagas Abertas
                     </div>
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">
@@ -102,7 +102,7 @@ function MotoristaHero() {
                     <div className="flex items-center justify-center md:justify-start gap-6 pt-4 text-sm font-semibold text-white/90">
                         <div className="flex items-center gap-2">
                             <DollarSign className="w-5 h-5 text-green-400" />
-                            <span>Ganhos acima da média</span>
+                            <span>Você fica com 90% da corrida</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Clock className="w-5 h-5 text-cyan-300" />
@@ -128,7 +128,7 @@ function MotoristaHero() {
 
                         <div className="space-y-5">
                             <div className="bg-[#131620] p-5 rounded-xl border border-gray-700/30">
-                                <span className="text-gray-400 text-xs block mb-1">Ganhos esta semana</span>
+                                <span className="text-gray-400 text-xs block mb-1">Ganhos esta semana (90%)</span>
                                 <span className="text-white text-4xl font-black tracking-tight">R$ 2.450</span>
                                 <div className="flex items-center gap-1 mt-2 text-green-400 text-sm font-medium">
                                     <TrendingUp className="w-4 h-4" />
@@ -168,8 +168,9 @@ function EarningsCalculator() {
     const sectionRef = useScrollAnimation<HTMLElement>({ type: 'fadeUp' });
 
     const earnings = useMemo(() => {
-        const avgPerHour = 25; // R$ per hour estimate
-        const daily = hours * avgPerHour;
+        const avgPerHour = 28; // R$ per hour estimate (gross)
+        const grossDaily = hours * avgPerHour;
+        const daily = Math.round(grossDaily * 0.9); // 90% para o motorista
         const weekly = daily * days;
         const monthly = weekly * 4;
         return { daily, weekly, monthly };
@@ -201,7 +202,7 @@ function EarningsCalculator() {
                         </span>
                     </h2>
                     <p className="text-blue-100/60 max-w-lg mx-auto">
-                        Ajuste os valores abaixo e veja sua estimativa de ganhos
+                        Você fica com <strong className="text-green-400">90% do valor</strong> de cada corrida. Ajuste e veja sua estimativa:
                     </p>
                 </div>
 
@@ -276,7 +277,7 @@ function EarningsCalculator() {
                     </div>
 
                     <p className="text-center text-xs text-white/30">
-                        *Valores estimados com base na média regional. Ganhos reais podem variar.
+                        *Valores já com desconto de 10% da taxa do app. Ganhos reais podem variar conforme demanda.
                     </p>
                 </div>
             </div>
@@ -337,10 +338,12 @@ function Benefits() {
     const gridRef = useScrollAnimation<HTMLDivElement>({ type: 'stagger' });
 
     const benefits = [
-        { icon: <Clock className="w-7 h-7" />, title: 'Sem horário fixo', desc: 'Ligue o app quando quiser, desligue quando precisar.' },
-        { icon: <DollarSign className="w-7 h-7" />, title: 'Receba rápido', desc: 'Ganhos depositados diariamente na sua conta.' },
-        { icon: <Shield className="w-7 h-7" />, title: 'Suporte 24h', desc: 'Equipe de suporte dedicada via WhatsApp.' },
-        { icon: <Star className="w-7 h-7" />, title: 'Bonificações', desc: 'Motoristas bem avaliados recebem mais corridas e bônus.' },
+        { icon: <Shield className="w-7 h-7" />, title: 'App Legalizado', desc: 'Aplicativo regularizado. Trabalhe tranquilo e protegido pela lei.' },
+        { icon: <DollarSign className="w-7 h-7" />, title: 'Taxa Reduzida — 90/10', desc: 'Você fica com 90% do valor da corrida. Só 10% é do aplicativo.' },
+        { icon: <TrendingUp className="w-7 h-7" />, title: 'Tarifa Dinâmica em Tempo Real', desc: 'Preços ajustam automaticamente conforme demanda. Mais demanda = mais ganho.' },
+        { icon: <Car className="w-7 h-7" />, title: 'Rode Menos Vazio', desc: 'Cálculo interno inteligente: o passageiro mais próximo sempre chega até você.' },
+        { icon: <Star className="w-7 h-7" />, title: 'Parceiros Exclusivos', desc: 'Posto de gasolina, lava jato, oficina e estética com desconto para motoristas Bora.' },
+        { icon: <Clock className="w-7 h-7" />, title: 'Suporte 24h + App da Região', desc: 'Somos da região e estamos sempre disponíveis. Suporte rápido via WhatsApp.' },
     ];
 
     return (
