@@ -27,10 +27,10 @@ export function Header() {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-blue-900/10 backdrop-blur-md border-b border-white/5 text-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-between">
                 {/* Logo Area */}
                 <a href="#inicio" className="flex items-center gap-2">
-                    <img src="/assets/logo-bora.png" alt="Bora Passageiro PA" className="h-12 sm:h-16 w-auto object-contain hover:opacity-90 transition-opacity" />
+                    <img src="/assets/logo-bora.png" alt="Bora Passageiro PA" className="h-10 sm:h-12 md:h-16 w-auto object-contain hover:opacity-90 transition-opacity" />
                 </a>
 
                 {/* Desktop Nav */}

@@ -13,14 +13,14 @@ export function FloatingWhatsApp() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleClick}
-            className="fixed bottom-6 right-6 z-50 group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 group"
             aria-label="Fale conosco no WhatsApp"
         >
             {/* Pulse ring */}
             <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-25" />
 
             {/* Main button */}
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-lg shadow-green-500/40 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/50 active:scale-95">
+            <div className="relative flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-lg shadow-green-500/40 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/50 active:scale-95">
                 {/* WhatsApp Icon */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

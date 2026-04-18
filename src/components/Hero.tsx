@@ -7,16 +7,16 @@ export function Hero() {
     const phoneRef = useScrollAnimation<HTMLDivElement>({ type: 'slideRight', delay: 0.4 });
 
     return (
-        <section id="inicio" className="relative min-h-[90vh] flex items-center pt-28 pb-12 overflow-hidden">
+        <section id="inicio" className="relative min-h-[85vh] md:min-h-[90vh] flex items-center pt-20 sm:pt-28 pb-8 sm:pb-12 overflow-hidden">
 
-            <div className="container mx-auto px-4 z-10 grid md:grid-cols-2 gap-8 items-center">
+            <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 z-10 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
                 {/* Text Content */}
                 <div ref={textRef} className="text-center md:text-left space-y-6">
                     {/* Big Logo */}
                     <img
                         src="/assets/logo-bora-full.png"
                         alt="Bora Passageiro PA"
-                        className="h-20 md:h-28 w-auto object-contain mx-auto md:mx-0 drop-shadow-2xl"
+                        className="h-14 sm:h-20 md:h-28 w-auto object-contain mx-auto md:mx-0 drop-shadow-2xl"
                     />
 
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-lg">
@@ -24,12 +24,12 @@ export function Hero() {
                         App Legalizado — Xinguara, Conceição, Redenção e Região
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white drop-shadow-lg">
                         Seu transporte <br />
                         rápido e seguro
                     </h1>
 
-                    <p className="text-lg md:text-xl text-blue-50 max-w-lg mx-auto md:mx-0 font-medium leading-relaxed drop-shadow-md">
+                    <p className="text-base sm:text-lg md:text-xl text-blue-50 max-w-lg mx-auto md:mx-0 font-medium leading-relaxed drop-shadow-md">
                         Carros e motos à sua disposição. Peça sua corrida em segundos e chegue ao seu destino com conforto.
                     </p>
 
@@ -48,10 +48,10 @@ export function Hero() {
                 </div>
 
                 {/* Phone Mockup Container */}
-                <div ref={phoneRef} className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
+                <div ref={phoneRef} className="relative flex justify-center items-center mt-6 md:mt-0 perspective-1000">
 
                     {/* Modern Phone Frame */}
-                    <div className="relative w-[300px] h-[620px] bg-slate-950 rounded-[3rem] border-[6px] border-slate-900 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 ring-1 ring-white/10">
+                    <div className="relative w-[220px] h-[460px] sm:w-[260px] sm:h-[540px] md:w-[300px] md:h-[620px] bg-slate-950 rounded-[2rem] sm:rounded-[3rem] border-[4px] sm:border-[6px] border-slate-900 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 ring-1 ring-white/10">
 
                         {/* Status Bar Mock */}
                         <div className="absolute top-0 w-full h-8 z-30 flex justify-between items-center px-6 pt-2 opacity-80">
