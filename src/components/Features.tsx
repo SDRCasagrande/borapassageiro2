@@ -1,4 +1,5 @@
 import { ShieldCheck, Zap, Wallet, Star } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export function Features() {
     const features = [
@@ -24,10 +25,13 @@ export function Features() {
         }
     ];
 
+    const titleRef = useScrollAnimation<HTMLDivElement>({ type: 'fadeUp' });
+    const gridRef = useScrollAnimation<HTMLDivElement>({ type: 'stagger', staggerDelay: 0.12 });
+
     return (
         <section id="seguranca" className="py-24 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16 space-y-4">
+                <div ref={titleRef} className="text-center mb-16 space-y-4">
                     <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter">
                         POR QUE ESCOLHER O <span className="text-blue-500">BORA?</span>
                     </h2>
@@ -36,7 +40,7 @@ export function Features() {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, index) => (
                         <div key={index} className="bg-[#0b1d30]/50 p-6 rounded-2xl border border-white/5 hover:border-blue-400/50 transition-all hover:-translate-y-1 group backdrop-blur-sm">
                             <div className="w-14 h-14 bg-[#0F2942] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/10 text-white">

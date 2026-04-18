@@ -1,35 +1,65 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
+    const isMotoristaPage = location.pathname === '/motorista';
 
-    const navLinks = [
+    // Each site has its own navigation — fully standalone
+    const passageiroLinks = [
         { href: '#inicio', label: 'Início' },
         { href: '#como-funciona', label: 'Como Funciona' },
         { href: '#seguranca', label: 'Segurança' },
         { href: '#depoimentos', label: 'Depoimentos' },
-        { href: '#seja-um-motorista', label: 'Seja Motorista' },
+        { href: '#cadastro-passageiro', label: 'Baixar App' },
     ];
+
+    const motoristaLinks = [
+        { href: '#inicio', label: 'Início' },
+        { href: '#calculadora', label: 'Ganhos' },
+        { href: '#requisitos', label: 'Requisitos' },
+        { href: '#cadastro-motorista', label: 'Cadastre-se' },
+    ];
+
+    const navLinks = isMotoristaPage ? motoristaLinks : passageiroLinks;
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-blue-900/10 backdrop-blur-md border-b border-white/5 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
                 {/* Logo Area */}
-                <div className="flex items-center gap-2">
+                <a href="#inicio" className="flex items-center gap-2">
                     <img src="/assets/logo-bora.png" alt="Bora Passageiro PA" className="h-12 sm:h-16 w-auto object-contain hover:opacity-90 transition-opacity" />
-                </div>
+                </a>
 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+                <nav className="hidden md:flex items-center gap-4 lg:gap-6">
                     {navLinks.map((link) => (
                         <a key={link.href} href={link.href} className="text-sm font-medium hover:text-blue-400 transition-colors">
                             {link.label}
                         </a>
                     ))}
+
+                    {/* Primary CTA per site */}
+                    {isMotoristaPage ? (
+                        <a
+                            href="#cadastro-motorista"
+                            className="text-sm font-bold bg-gradient-to-r from-green-500 to-emerald-600 text-white px-5 py-2.5 rounded-xl hover:from-green-400 hover:to-emerald-500 transition-all shadow-lg shadow-green-500/20"
+                        >
+                            Quero ser motorista
+                        </a>
+                    ) : (
+                        <a
+                            href="#cadastro-passageiro"
+                            className="text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-5 py-2.5 rounded-xl hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/20"
+                        >
+                            Baixar App
+                        </a>
+                    )}
                 </nav>
 
-                {/* CTA */}
+                {/* Mobile toggle */}
                 <div className="flex items-center gap-4">
                     <button
                         className="md:hidden text-white p-2"
@@ -55,6 +85,24 @@ export function Header() {
                                 {link.label}
                             </a>
                         ))}
+                        {/* Mobile CTA */}
+                        {isMotoristaPage ? (
+                            <a
+                                href="#cadastro-motorista"
+                                className="text-green-400 font-bold py-3 px-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center mt-2"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Quero ser motorista
+                            </a>
+                        ) : (
+                            <a
+                                href="#cadastro-passageiro"
+                                className="text-cyan-400 font-bold py-3 px-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-center mt-2"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Baixar App
+                            </a>
+                        )}
                     </nav>
                 </div>
             )}

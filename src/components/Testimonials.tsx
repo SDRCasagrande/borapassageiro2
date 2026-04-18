@@ -1,4 +1,5 @@
 import { Star, Quote } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const testimonials = [
     {
@@ -32,13 +33,16 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+    const titleRef = useScrollAnimation<HTMLDivElement>({ type: 'fadeUp' });
+    const gridRef = useScrollAnimation<HTMLDivElement>({ type: 'stagger', staggerDelay: 0.15 });
+
     return (
         <section id="depoimentos" className="py-20 md:py-28 relative overflow-hidden">
             {/* Background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-12 md:mb-16 space-y-4">
+                <div ref={titleRef} className="text-center mb-12 md:mb-16 space-y-4">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-bold uppercase tracking-wider">
                         <Star className="w-3 h-3 fill-yellow-400" />
                         Avaliação 4.9
@@ -51,7 +55,7 @@ export function Testimonials() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                     {testimonials.map((t, index) => (
                         <div
                             key={index}

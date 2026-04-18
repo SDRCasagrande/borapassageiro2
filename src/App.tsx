@@ -1,42 +1,49 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Footer } from './components/Footer';
 import { Features } from './components/Features';
-import { DriverSection } from './components/DriverSection';
 import { Dashboard } from './components/Dashboard';
 import { DiscountPopup } from './components/DiscountPopup';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { HowItWorks } from './components/HowItWorks';
 import { Testimonials } from './components/Testimonials';
+import { LeadFormPassageiro } from './components/LeadFormPassageiro';
 import { AnalyticsService } from './services/analytics';
 import { useEffect } from 'react';
 
 import { PromoBanner } from './components/PromoBanner';
 import { VideoGallery } from './components/VideoGallery';
+import { CookieConsent } from './components/CookieConsent';
 
-function LandingPage() {
-  // Track visit on mount
+/* ─── SITE PASSAGEIRO ─────────────────────────── */
+function SitePassageiro() {
   useEffect(() => {
     AnalyticsService.trackVisit();
   }, []);
 
-  // Scroll to hash on page load (SPA fix)
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
-      // Wait for DOM to render all sections
       setTimeout(() => {
         const el = document.querySelector(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 500);
     }
   }, []);
 
   return (
     <>
+      <Helmet>
+        <title>Bora Passageiro | Transporte por App em Xinguara e Região - PA</title>
+        <meta name="description" content="Bora Passageiro — seu app de transporte em Xinguara, PA. Corridas rápidas, seguras e com preço justo. Baixe agora na Play Store ou App Store!" />
+        <link rel="canonical" href="https://borapassageiroxinguara.com.br" />
+        <meta property="og:title" content="Bora Passageiro — Transporte Rápido e Seguro em Xinguara" />
+        <meta property="og:description" content="Peça sua corrida em segundos. Carros e motos à disposição em Xinguara e região. Baixe o app agora!" />
+        <meta property="og:url" content="https://borapassageiroxinguara.com.br" />
+        <meta property="og:image" content="https://borapassageiroxinguara.com.br/assets/logo-bora-full.png" />
+      </Helmet>
       <PromoBanner />
       <Header />
       <main>
@@ -45,19 +52,21 @@ function LandingPage() {
         <VideoGallery />
         <Features />
         <Testimonials />
-        <DriverSection />
+        <LeadFormPassageiro />
       </main>
       <Footer />
       <DiscountPopup />
       <FloatingWhatsApp />
+      <CookieConsent companyName="Bora Passageiro" />
     </>
   );
 }
 
+/* ─── IMPORTS ────────────────────────────────── */
 import { Login } from './pages/Login';
 import { Integrations } from './pages/Integrations';
 import { ContentManager } from './pages/ContentManager';
-import { CookieConsent } from './components/CookieConsent';
+import { Motorista } from './pages/Motorista';
 
 // Auth guard for protected routes
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -68,12 +77,20 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/* ─── APP ROOT ───────────────────────────────── */
 function App() {
   return (
     <Router>
       <div className="min-h-screen font-sans selection:bg-blue-500 selection:text-white">
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          {/* Site Passageiro (standalone) */}
+          <Route path="/" element={<SitePassageiro />} />
+          <Route path="/passageiro" element={<SitePassageiro />} />
+
+          {/* Site Motorista (standalone) */}
+          <Route path="/motorista" element={<Motorista />} />
+
+          {/* Admin Routes (shared) */}
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
@@ -91,8 +108,6 @@ function App() {
             </ProtectedRoute>
           } />
         </Routes>
-        {/* Cookie Consent Banner - LGPD Compliance */}
-        <CookieConsent companyName="Bora Passageiro" />
       </div>
     </Router>
   )

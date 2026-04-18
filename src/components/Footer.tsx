@@ -1,8 +1,29 @@
 import { Phone, Instagram } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export function Footer() {
     const whatsappNumber = '5594992777717';
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+    const location = useLocation();
+    const isMotoristaPage = location.pathname === '/motorista';
+
+    // Context-aware nav links — each site has its own Footer links
+    const passageiroFooterLinks = [
+        { href: '#inicio', label: 'Início' },
+        { href: '#como-funciona', label: 'Como Funciona' },
+        { href: '#seguranca', label: 'Segurança' },
+        { href: '#depoimentos', label: 'Depoimentos' },
+        { href: '#cadastro-passageiro', label: 'Baixar App' },
+    ];
+
+    const motoristaFooterLinks = [
+        { href: '#inicio', label: 'Início' },
+        { href: '#calculadora', label: 'Calculadora de Ganhos' },
+        { href: '#requisitos', label: 'Requisitos' },
+        { href: '#cadastro-motorista', label: 'Cadastre-se' },
+    ];
+
+    const footerLinks = isMotoristaPage ? motoristaFooterLinks : passageiroFooterLinks;
 
     return (
         <footer className="bg-[#021327] border-t border-white/5 text-blue-200 text-sm py-10 md:py-12">
@@ -12,7 +33,10 @@ export function Footer() {
                 <div className="space-y-4 sm:col-span-2 md:col-span-1">
                     <img src="/assets/logo-bora-full.png" alt="Bora Passageiro PA" className="h-14 md:h-16 w-auto object-contain opacity-90" />
                     <p className="text-blue-100/70 leading-relaxed text-sm">
-                        Conectando você ao seu destino com segurança, agilidade e o melhor preço da cidade.
+                        {isMotoristaPage
+                            ? 'Seja motorista parceiro e ganhe mais. Horário flexível, suporte 24h e ganhos acima da média.'
+                            : 'Conectando você ao seu destino com segurança, agilidade e o melhor preço da cidade.'
+                        }
                     </p>
                 </div>
 
@@ -20,11 +44,11 @@ export function Footer() {
                 <div>
                     <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-wider">Navegação</h3>
                     <ul className="space-y-2">
-                        <li><a href="#inicio" className="hover:text-blue-400 transition-colors">Início</a></li>
-                        <li><a href="#como-funciona" className="hover:text-blue-400 transition-colors">Como Funciona</a></li>
-                        <li><a href="#seguranca" className="hover:text-blue-400 transition-colors">Segurança</a></li>
-                        <li><a href="#depoimentos" className="hover:text-blue-400 transition-colors">Depoimentos</a></li>
-                        <li><a href="#seja-um-motorista" className="hover:text-blue-400 transition-colors">Seja Motorista</a></li>
+                        {footerLinks.map((link) => (
+                            <li key={link.href}>
+                                <a href={link.href} className="hover:text-blue-400 transition-colors">{link.label}</a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
 

@@ -1,4 +1,5 @@
 import { MapPin, Smartphone, ThumbsUp } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const steps = [
     {
@@ -25,6 +26,9 @@ const steps = [
 ];
 
 export function HowItWorks() {
+    const titleRef = useScrollAnimation<HTMLDivElement>({ type: 'fadeUp' });
+    const gridRef = useScrollAnimation<HTMLDivElement>({ type: 'stagger', staggerDelay: 0.2 });
+
     return (
         <section id="como-funciona" className="py-20 md:py-28 relative overflow-hidden">
             {/* Background decoration */}
@@ -39,7 +43,7 @@ export function HowItWorks() {
             </div>
 
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-12 md:mb-20 space-y-4">
+                <div ref={titleRef} className="text-center mb-12 md:mb-20 space-y-4">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider">
                         Simples e rápido
                     </div>
@@ -51,7 +55,7 @@ export function HowItWorks() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     {steps.map((step, index) => (
                         <div
                             key={index}

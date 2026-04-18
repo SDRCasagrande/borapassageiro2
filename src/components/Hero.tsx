@@ -1,13 +1,17 @@
 import { ActionButtons } from './ActionButtons';
 import { ShieldCheck, Star } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export function Hero() {
+    const textRef = useScrollAnimation<HTMLDivElement>({ type: 'fadeUp', delay: 0.1 });
+    const phoneRef = useScrollAnimation<HTMLDivElement>({ type: 'slideRight', delay: 0.4 });
+
     return (
         <section id="inicio" className="relative min-h-[90vh] flex items-center pt-28 pb-12 overflow-hidden">
 
             <div className="container mx-auto px-4 z-10 grid md:grid-cols-2 gap-8 items-center">
                 {/* Text Content */}
-                <div className="text-center md:text-left space-y-6">
+                <div ref={textRef} className="text-center md:text-left space-y-6">
                     {/* Big Logo */}
                     <img
                         src="/assets/logo-bora-full.png"
@@ -44,7 +48,7 @@ export function Hero() {
                 </div>
 
                 {/* Phone Mockup Container */}
-                <div className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
+                <div ref={phoneRef} className="relative flex justify-center items-center mt-12 md:mt-0 perspective-1000">
 
                     {/* Modern Phone Frame */}
                     <div className="relative w-[300px] h-[620px] bg-slate-950 rounded-[3rem] border-[6px] border-slate-900 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 ring-1 ring-white/10">
