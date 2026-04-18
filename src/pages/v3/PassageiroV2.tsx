@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { AnalyticsService } from '../../services/analytics';
-import { Shield, Clock, MapPin, Smartphone } from 'lucide-react';
+import { Shield, Clock, MapPin, Smartphone, Star } from 'lucide-react';
 import { ActionButtons } from '../../components/ActionButtons';
 import { FloatingWhatsApp } from '../../components/FloatingWhatsApp';
 
@@ -184,6 +184,83 @@ function BentoGridFeatures() {
   );
 }
 
+/* ─── COMO FUNCIONA V3 ─────────────────────────────────── */
+function ComoFuncionaV3() {
+  const steps = [
+    { title: "Defina o Destino", desc: "Abra o app e digite para onde quer ir. O preço estimado aparece na hora.", icon: <MapPin className="w-8 h-8 text-cyan-400" /> },
+    { title: "Peça sua Corrida", desc: "Com um toque, encontre o motorista mais próximo disponível.", icon: <Smartphone className="w-8 h-8 text-cyan-400" /> },
+    { title: "Viaje com Segurança", desc: "Acompanhe o trajeto em tempo real e compartilhe com amigos.", icon: <Shield className="w-8 h-8 text-cyan-400" /> },
+  ];
+
+  return (
+    <section id="como-funciona" className="py-24 bg-[#0a101d] border-t border-white/5 relative overflow-hidden">
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">Fácil como <span className="text-cyan-400">respirar.</span></h2>
+          <p className="mt-4 text-cyan-50/60 font-medium">3 passos simples para estar a caminho do seu destino.</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {steps.map((step, i) => (
+            <motion.div 
+              key={i}
+              whileHover={{ y: -5 }}
+              className="bg-[#121a28] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 text-[120px] font-black text-white/5 leading-none -mt-4 -mr-4 select-none group-hover:text-white/10 transition-colors">
+                {i + 1}
+              </div>
+              <div className="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 relative z-10">
+                {step.icon}
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3 relative z-10">{step.title}</h3>
+              <p className="text-white/50 relative z-10">{step.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── DEPOIMENTOS DE ALTA CONVERSÃO ────────────────────── */
+function DepoimentosV3() {
+  const depoimentos = [
+    { nome: "Amanda Silva", papel: "Passageira Diária", texto: "Melhor app da região disparado! Os motoristas são super educados e o carro chega muito rápido na região central." },
+    { nome: "Carlos Mendes", papel: "Estudante", texto: "Preço super justo, não sofro mais com cancelamentos. Recomendo pra todo mundo da faculdade." },
+    { nome: "Bruna Costa", papel: "Mãe", texto: "Acompanho sempre quando meus filhos usam o Bora pra ir pra escola. A segurança impecável me dá muita paz." }
+  ];
+
+  return (
+    <section id="seguranca" className="py-24 bg-[#030712] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="mb-16">
+           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">A voz de quem usa.</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {depoimentos.map((dep, i) => (
+            <motion.div 
+              key={i}
+              whileHover={{ scale: 1.02 }}
+              className="bg-white/[0.02] border border-white/5 p-8 rounded-3xl"
+            >
+              <div className="flex text-yellow-500 mb-4">
+                {Array.from({length: 5}).map((_, idx) => <Star key={idx} className="w-5 h-5 fill-current" />)}
+              </div>
+              <p className="text-white/80 text-lg mb-6 leading-relaxed">"{dep.texto}"</p>
+              <div>
+                <h4 className="text-white font-bold">{dep.nome}</h4>
+                <p className="text-white/40 text-sm">{dep.papel}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── V3 PAGE EXPORT ───────────────────────────────────── */
 export function PassageiroV2() {
   useEffect(() => {
@@ -203,6 +280,8 @@ export function PassageiroV2() {
       <main>
         <PassageiroHeroV3 />
         <BentoGridFeatures />
+        <ComoFuncionaV3 />
+        <DepoimentosV3 />
       </main>
 
       <FloatingWhatsApp />
