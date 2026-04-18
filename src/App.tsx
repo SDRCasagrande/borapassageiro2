@@ -4,10 +4,63 @@ import { PassageiroV2 } from './pages/v3/PassageiroV2';
 import { MotoristaV2 } from './pages/v3/MotoristaV2';
 import { Dashboard } from './components/Dashboard';
 import { AnalyticsService } from './services/analytics';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CookieConsent } from './components/CookieConsent';
 import { SplitHero } from './components/v3/SplitHero';
+
+/* ─── PIXEL INJECTOR RUNTIME ─────────────────── */
+function PixelInjector() {
+  const [pixelsLoaded, setPixelsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (pixelsLoaded) return;
+    
+    async function loadPixels() {
+      // 1. Fetch public pixels from the backend (if configured via admin)
+      const data = await AnalyticsService.getPublicIntegrations();
+      if (!data) return;
+
+      // 2. Inject Facebook Pixel
+      if (data.facebook?.pixelId) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '${data.facebook.pixelId}');
+          fbq('track', 'PageView');
+        `;
+        document.head.appendChild(script);
+      }
+
+      // 3. Inject Google Analytics (GA4)
+      if (data.google?.measurementId) {
+        const scriptUrl = document.createElement('script');
+        scriptUrl.src = `https://www.googletagmanager.com/gtag/js?id=${data.google.measurementId}`;
+        scriptUrl.async = true;
+        document.head.appendChild(scriptUrl);
+
+        const scriptData = document.createElement('script');
+        scriptData.innerHTML = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${data.google.measurementId}');
+        `;
+        document.head.appendChild(scriptData);
+      }
+      setPixelsLoaded(true);
+    }
+    loadPixels();
+  }, [pixelsLoaded]);
+  return null;
+}
 
 /* ─── HOME PAGE (DOMÍNIO PRINCIPAL JUNTADO) ──── */
 function HomePage() {
@@ -40,6 +93,7 @@ function HomePage() {
 import { Login } from './pages/Login';
 import { Integrations } from './pages/Integrations';
 import { ContentManager } from './pages/ContentManager';
+import { Leads } from './pages/Leads';
 
 // Auth guard for protected routes
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -64,6 +118,7 @@ function App() {
 
   return (
     <Router>
+      <PixelInjector />
       <div className="min-h-screen font-sans selection:bg-blue-500 selection:text-white">
         <Routes>
           {/* Rota Raiz Dinâmica (resolve o problema de todas as páginas serem iguais nos subdomínios) */}
@@ -88,6 +143,11 @@ function App() {
           <Route path="/content" element={
             <ProtectedRoute>
               <ContentManager />
+            </ProtectedRoute>
+          } />
+          <Route path="/leads" element={
+            <ProtectedRoute>
+              <Leads />
             </ProtectedRoute>
           } />
         </Routes>

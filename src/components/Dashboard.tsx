@@ -156,6 +156,9 @@ export function Dashboard() {
                             <button onClick={handlePrint} className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 hidden sm:block">
                                 <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
+                            <Link to="/leads" className="p-2 bg-emerald-100 text-emerald-600 rounded-lg hover:bg-emerald-200 hidden sm:block" title="CRM de Leads">
+                                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </Link>
                             <Link to="/content" className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 hidden sm:block" title="Gerenciar Site">
                                 <Layout className="w-4 h-4 sm:w-5 sm:h-5" />
                             </Link>

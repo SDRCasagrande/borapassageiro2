@@ -216,4 +216,17 @@ export const AnalyticsService = {
     saveData: () => {
         console.warn('saveData is deprecated, data is now saved via API');
     },
+
+    // Get public integrations (Pixels)
+    getPublicIntegrations: async () => {
+        try {
+            // Depending on backend, we could fetch public configs. 
+            // If API doesn't exist, this will fail gracefully.
+            const response = await fetch(`${API_URL}/api/integrations/public`).catch(() => null);
+            if (!response || !response.ok) return null;
+            return await response.json();
+        } catch {
+            return null;
+        }
+    }
 };
