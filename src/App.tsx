@@ -130,17 +130,25 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 /* ─── APP ROOT ───────────────────────────────── */
 function App() {
+  const hostname = window.location.hostname;
+  
+  // Decide qual componente renderizar na rota raiz (/) com base no subdomínio
+  let RootComponent = <HomePage />;
+  if (hostname.startsWith('motorista.')) {
+    RootComponent = <Motorista />;
+  } else if (hostname.startsWith('passageiro.')) {
+    RootComponent = <SitePassageiro />;
+  }
+
   return (
     <Router>
       <div className="min-h-screen font-sans selection:bg-blue-500 selection:text-white">
         <Routes>
-          {/* HomePage (domínio principal juntado) */}
-          <Route path="/" element={<HomePage />} />
+          {/* Rota Raiz Dinâmica (resolve o problema de todas as páginas serem iguais nos subdomínios) */}
+          <Route path="/" element={RootComponent} />
 
-          {/* Landing Passageiro (tráfego pago) */}
+          {/* Mantém as rotas de path explícitas para garantir funcionamento de links diretos */}
           <Route path="/passageiro" element={<SitePassageiro />} />
-
-          {/* Landing Motorista (tráfego pago) */}
           <Route path="/motorista" element={<Motorista />} />
 
           {/* Admin Routes (shared) */}
