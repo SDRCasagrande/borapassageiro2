@@ -12,7 +12,7 @@ function PremiumHeaderMotorista() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0f18]/80 backdrop-blur-xl border-b border-white/5 text-white transition-all duration-300">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
         <a href="#inicio" className="flex items-center gap-2">
-          <img src="/assets/logo-novo.png" alt="Bora Motorista" className="h-10 sm:h-12 w-auto object-contain" />
+          <img src="/assets/logo-novo.png" alt="Bora Motorista" className="h-10 sm:h-12 w-auto object-contain brightness-0 invert" />
         </a>
         <nav className="hidden md:flex items-center gap-8">
           <a href="#ganhos" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Ganhos & Taxas</a>
