@@ -376,48 +376,39 @@ function Benefits() {
     );
 }
 
-/* ─── MOTORISTA TESTIMONIALS ─────────────────────────── */
+/* ─── MOTORISTA STATS ─────────────────────────────────── */
 function MotoristaTestimonials() {
-    const gridRef = useScrollAnimation<HTMLDivElement>({ type: 'stagger' });
-
-    const testimonials = [
-        { name: 'Roberto Lima', text: 'Comecei com a moto e hoje tenho dois carros rodando. O Bora mudou minha vida financeira!', avatar: 'RL' },
-        { name: 'Francisco Alves', text: 'Trabalho 6h por dia e consigo tirar mais de R$ 2.000 por semana. Melhor decisão que tomei.', avatar: 'FA' },
-        { name: 'Marcos Souza', text: 'O suporte é incrível. Qualquer problema, resolvem na hora pelo WhatsApp. Recomendo demais!', avatar: 'MS' },
-    ];
+    const sectionRef = useScrollAnimation<HTMLElement>({ type: 'fadeUp' });
 
     return (
-        <section className="py-20 md:py-24 relative">
-            <div className="max-w-4xl mx-auto px-4">
-                <div className="text-center mb-12 space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white">
-                        Motoristas que{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-                            aprovam
+        <section ref={sectionRef} className="py-16 sm:py-24 relative">
+            <div className="max-w-4xl mx-auto px-3 sm:px-4">
+                <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white">
+                        Por que motoristas{' '}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
+                            escolhem o Bora
                         </span>
                     </h2>
                 </div>
 
-                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {testimonials.map((t, i) => (
-                        <div key={i} className="bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.06] transition-all">
-                            <div className="flex gap-1 mb-3">
-                                {[1, 2, 3, 4, 5].map((s) => (
-                                    <Star key={s} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                                ))}
-                            </div>
-                            <p className="text-blue-100/80 text-sm leading-relaxed mb-4">"{t.text}"</p>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-sm font-bold">
-                                    {t.avatar}
-                                </div>
-                                <div>
-                                    <p className="text-white font-semibold text-sm">{t.name}</p>
-                                    <p className="text-green-400/70 text-xs">Motorista Parceiro</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                    <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">90%</div>
+                        <p className="text-xs sm:text-sm text-blue-100/50 mt-1 sm:mt-2">Fica com o motorista</p>
+                    </div>
+                    <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">5+</div>
+                        <p className="text-xs sm:text-sm text-blue-100/50 mt-1 sm:mt-2">Cidades atendidas</p>
+                    </div>
+                    <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">24h</div>
+                        <p className="text-xs sm:text-sm text-blue-100/50 mt-1 sm:mt-2">Suporte via WhatsApp</p>
+                    </div>
+                    <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">10%</div>
+                        <p className="text-xs sm:text-sm text-blue-100/50 mt-1 sm:mt-2">Taxa do aplicativo</p>
+                    </div>
                 </div>
             </div>
         </section>
