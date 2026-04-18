@@ -12,7 +12,7 @@ export function SplitHero() {
         <img 
           src="/assets/logo-novo.png" 
           alt="Bora Passageiro" 
-          className="h-12 md:h-20 drop-shadow-2xl brightness-0 invert" 
+          className="h-16 md:h-32 drop-shadow-2xl brightness-0 invert" 
         />
       </div>
 
